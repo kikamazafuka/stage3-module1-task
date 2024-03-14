@@ -1,6 +1,6 @@
 package com.mjc.school.repository.impl;
 
-import com.mjc.school.repository.Repository;
+import com.mjc.school.repository.GeneralRepository;
 import com.mjc.school.repository.datasource.DataGenerator;
 import com.mjc.school.repository.model.News;
 
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class NewsRepository implements Repository<News> {
+public class NewsRepository implements GeneralRepository<News> {
 
     private final DataGenerator dataGenerator;
     private final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
@@ -21,7 +21,7 @@ public class NewsRepository implements Repository<News> {
 
 
     @Override
-    public List<News> findAll() {
+    public List<News> readAll() {
         return this.allNews;
     }
 

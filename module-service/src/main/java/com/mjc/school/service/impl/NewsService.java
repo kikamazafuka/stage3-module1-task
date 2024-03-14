@@ -30,7 +30,7 @@ public class NewsService implements Service<NewsDTO> {
     @Override
     public List<NewsDTO> getAllNews() {
         try {
-            return newsRepository.findAll().stream().map(NewsMapper::mapModelToDTO).toList();
+            return newsRepository.readAll().stream().map(NewsMapper::mapModelToDTO).toList();
         } catch (Exception e){
             throw new NewsServiceException("Error getting all news", "GET_ALL_ERROR");
         }

@@ -2,8 +2,8 @@ package com.mjc.school.repository;
 
 import java.util.List;
 
-public interface Repository <T>{
-    List<T> findAll();
+public interface GeneralRepository<T>{
+    List<T> readAll();
     T readById(long id);
     T create(T t);
     T update(T t);
