@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface Repository <T>{
     List<T> findAll();
-    T findById(long id);
+    T readById(long id);
     T create(T t);
     T update(T t);
     Boolean deleteById(long id);

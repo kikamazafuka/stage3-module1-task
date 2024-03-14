@@ -7,6 +7,9 @@ import org.modelmapper.ModelMapper;
 public class NewsMapper {
     private static final ModelMapper modelMapper = new ModelMapper();
 
+    private NewsMapper() {
+    }
+
     public static News mapDTOToModel(NewsDTO newsDTO) {
         return modelMapper.map(newsDTO, News.class);
     }

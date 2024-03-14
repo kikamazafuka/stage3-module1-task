@@ -26,7 +26,7 @@ public class NewsRepository implements Repository<News> {
     }
 
     @Override
-    public News findById(long id) {
+    public News readById(long id) {
         for (News news : allNews) {
             if (news.getId() == id) {
                 return news;
@@ -49,20 +49,20 @@ public class NewsRepository implements Repository<News> {
     @Override
     public News update(News news) {
         LocalDateTime time = LocalDateTime.parse(LocalDateTime.now().format(TIME_FORMAT));
-        News existingNews = findById(news.getId());
+        News existingNews = readById(news.getId());
         if (existingNews != null) {
             existingNews.setTitle(news.getTitle());
             existingNews.setContent(news.getContent());
             existingNews.setLastUpdateDate(time);
             existingNews.setAuthorId(news.getAuthorId());
-            allNews.replaceAll(n -> n.getId() == news.getId() ? existingNews : n);
+            allNews.replaceAll(n -> n.getId().equals(news.getId()) ? existingNews : n);
         }
         return existingNews;
     }
 
     @Override
     public Boolean deleteById(long id) {
-        News newsToDelete = findById(id);
+        News newsToDelete = readById(id);
         if (newsToDelete!=null){
             allNews.remove(newsToDelete);
             return true;

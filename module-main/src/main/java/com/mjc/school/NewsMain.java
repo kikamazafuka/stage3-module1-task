@@ -10,8 +10,7 @@ public class NewsMain {
 
     public static void main(String[] args) {
 
-        NewsRepository newsRepository = new NewsRepository();
-        NewsService newsService = new NewsService(newsRepository);
+        NewsService newsService = new NewsService();
         NewsController newsController = new NewsController(newsService);
         NewsMenu newsMenu = new NewsMenu(newsController);
         newsMenu.start();

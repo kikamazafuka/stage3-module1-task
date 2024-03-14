@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 public class NewsMenu {
 
+    private final String NEWS_WITH_ID = "News with ID ";
+
     private final Controller<NewsDTO> newsController;
     private final Scanner scanner;
 
@@ -64,7 +66,7 @@ public class NewsMenu {
         System.out.println("Enter news ID:");
         Long id = scanner.nextLong();
         NewsDTO newsDTO = newsController.getById(id);
-        System.out.println("News with ID " + id + ": " + newsDTO);
+        System.out.println(NEWS_WITH_ID + id + ": " + newsDTO);
     }
 
     private void createNews() {
@@ -107,7 +109,7 @@ public class NewsMenu {
             NewsDTO updatedNews = newsController.update(newsDTO);
             System.out.println("Updated News: " + updatedNews);
         } else {
-            System.out.println("News with ID " + id + " not found!");
+            System.out.println(NEWS_WITH_ID + id + " not found!");
         }
     }
 
@@ -117,9 +119,9 @@ public class NewsMenu {
 
         boolean deleted = newsController.delete(id);
         if (deleted) {
-            System.out.println("News with ID " + id + " deleted successfully.");
+            System.out.println(NEWS_WITH_ID + id + " deleted successfully.");
         } else {
-            System.out.println("News with ID " + id + " not found!");
+            System.out.println(NEWS_WITH_ID + id + " not found!");
         }
     }
 }

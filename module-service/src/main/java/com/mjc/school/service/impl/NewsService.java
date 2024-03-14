@@ -8,12 +8,11 @@ import com.mjc.school.service.dto.NewsDTO;
 import com.mjc.school.service.exception.NewsServiceException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class NewsService implements Service<NewsDTO> {
     private final NewsRepository newsRepository;
 
-    public NewsService(NewsRepository newsRepository) {
+    public NewsService() {
         this.newsRepository = new NewsRepository();
     }
 
@@ -31,9 +30,7 @@ public class NewsService implements Service<NewsDTO> {
     @Override
     public List<NewsDTO> getAllNews() {
         try {
-            List<News> all = newsRepository.findAll();
-            return newsRepository.findAll().stream().map(NewsMapper::mapModelToDTO)
-                    .collect(Collectors.toList());
+            return newsRepository.findAll().stream().map(NewsMapper::mapModelToDTO).toList();
         } catch (Exception e){
             throw new NewsServiceException("Error getting all news", "GET_ALL_ERROR");
         }
@@ -43,7 +40,7 @@ public class NewsService implements Service<NewsDTO> {
     @Override
     public NewsDTO getNewsById(Long newsId) {
         try {
-            News news = newsRepository.findById(newsId);
+            News news = newsRepository.readById(newsId);
             return NewsMapper.mapModelToDTO(news);
         } catch (Exception e){
             throw new NewsServiceException("Error getting news by id", "GET_BY_ID_ERROR");
@@ -54,7 +51,7 @@ public class NewsService implements Service<NewsDTO> {
     @Override
     public NewsDTO updateNews(NewsDTO newsDTO) {
         try {
-            News existingNews = newsRepository.findById(newsDTO.getId());
+            News existingNews = newsRepository.readById(newsDTO.getId());
             existingNews.setTitle(newsDTO.getTitle());
             existingNews.setContent(newsDTO.getContent());
             existingNews.setAuthorId(newsDTO.getAuthorId());
@@ -70,7 +67,7 @@ public class NewsService implements Service<NewsDTO> {
     @Override
     public boolean deleteNews(Long newsId) {
         try {
-            News news = newsRepository.findById(newsId);
+            News news = newsRepository.readById(newsId);
             if (news!=null) {
                 newsRepository.deleteById(newsId);
                 return true;

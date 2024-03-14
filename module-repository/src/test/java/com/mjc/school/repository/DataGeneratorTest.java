@@ -11,7 +11,7 @@ class DataGeneratorTest {
     @Test
     public void testReadFromFile(){
 
-        assertEquals(1, dataGenerator.generateNews());
+        assertEquals(20, dataGenerator.generateNews().size());
     }
 
 }
