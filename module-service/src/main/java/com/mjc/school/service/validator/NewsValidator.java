@@ -1,25 +1,22 @@
 package com.mjc.school.service.validator;
 
+import com.mjc.school.service.dto.NewsDTO;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class NewsValidator {
-    private static NewsValidator newsValidator;
-    private static final String NEWS_ID = "News id";
-    private static final String NEWS_CONTENT = "News content";
-    private static final String AUTHOR_ID = "Author id";
-    private static final String NEWS_TITLE = "News title";
-    private static final Integer NEWS_CONTENT_MIN_LENGTH = 5;
-    private static final Integer NEWS_CONTENT_MAX_LENGTH = 255;
-    private static final Integer NEWS_TITLE_MIN_LENGTH = 5;
-    private static final Integer NEWS_TITLE_MAX_LENGTH = 30;
-    private static final Integer MAX_AUTHOR_ID = 20;
+    public static List<String> validate(NewsDTO newsDTO) {
+        List<String> errors = new ArrayList<>();
 
-    public NewsValidator() {
-    }
-
-    public static NewsValidator getNewsValidator() {
-        if (newsValidator == null) {
-            newsValidator = new NewsValidator();
+        if (newsDTO.getTitle() == null || newsDTO.getTitle().length() < 5 || newsDTO.getTitle().length() > 30) {
+            errors.add("Title must be between 5 and 30 characters");
         }
 
-        return newsValidator;
+        if (newsDTO.getContent() == null || newsDTO.getContent().length() < 5 || newsDTO.getContent().length() > 255) {
+            errors.add("Content must be between 5 and 255 characters");
+        }
+
+        return errors;
     }
 }

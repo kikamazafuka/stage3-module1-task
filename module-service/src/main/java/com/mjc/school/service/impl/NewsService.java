@@ -6,6 +6,7 @@ import com.mjc.school.service.NewsMapper;
 import com.mjc.school.service.Service;
 import com.mjc.school.service.dto.NewsDTO;
 import com.mjc.school.service.exception.NewsServiceException;
+import com.mjc.school.service.validator.NewsValidator;
 
 import java.util.List;
 
@@ -18,6 +19,10 @@ public class NewsService implements Service<NewsDTO> {
 
     @Override
     public NewsDTO createNews(NewsDTO newsDTO) {
+        List<String> validationErrors = NewsValidator.validate(newsDTO);
+        if (!validationErrors.isEmpty()) {
+            throw new IllegalArgumentException("Validation failed: " + validationErrors);
+        }
         try {
             News news = NewsMapper.mapDTOToModel(newsDTO);
             News createdNews = newsRepository.create(news);
