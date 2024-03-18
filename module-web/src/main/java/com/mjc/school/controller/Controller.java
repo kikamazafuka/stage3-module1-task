@@ -5,11 +5,11 @@ import java.util.List;
 public interface Controller <T>{
     T create(T dto);
 
-    List<T> getAll();
+    List<T> readAll();
 
-    T getById(Long id);
+    T readById(Long id);
 
     T update(T dto);
 
-    boolean delete(Long id);
+    Boolean delete(Long id);
 }

@@ -2,7 +2,7 @@ package com.mjc.school.service.dto;
 
 import java.time.LocalDateTime;
 
-public class NewsDTO {
+public class NewsDto {
     private Long id;
     private String title;
     private String content;
@@ -58,7 +58,7 @@ public class NewsDTO {
         this.authorId = authorId;
     }
 
-    public NewsDTO(Long id, String title, String content, LocalDateTime createDate, LocalDateTime lastUpdateDate, Long authorId) {
+    public NewsDto(Long id, String title, String content, LocalDateTime createDate, LocalDateTime lastUpdateDate, Long authorId) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -67,7 +67,7 @@ public class NewsDTO {
         this.authorId = authorId;
     }
 
-    public NewsDTO() {
+    public NewsDto() {
     }
 
     @Override

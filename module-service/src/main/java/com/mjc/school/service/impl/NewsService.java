@@ -5,13 +5,13 @@ import com.mjc.school.repository.impl.NewsRepository;
 import com.mjc.school.repository.model.NewsModel;
 import com.mjc.school.service.NewsMapper;
 import com.mjc.school.service.Service;
-import com.mjc.school.service.dto.NewsDTO;
+import com.mjc.school.service.dto.NewsDto;
 import com.mjc.school.service.exception.NewsServiceException;
 import com.mjc.school.service.validator.NewsValidator;
 
 import java.util.List;
 
-public class NewsService implements Service<NewsDTO> {
+public class NewsService implements Service<NewsDto> {
     private final GeneralRepository<NewsModel> newsRepository;
     private final NewsValidator newsValidator;
 
@@ -21,7 +21,7 @@ public class NewsService implements Service<NewsDTO> {
     }
 
     @Override
-    public NewsDTO createNews(NewsDTO newsDTO) {
+    public NewsDto createNews(NewsDto newsDTO) {
         List<String> validationErrors = newsValidator.validate(newsDTO);
         if (!validationErrors.isEmpty()) {
             throw new IllegalArgumentException("Validation failed: " + validationErrors);
@@ -36,7 +36,7 @@ public class NewsService implements Service<NewsDTO> {
     }
 
     @Override
-    public List<NewsDTO> readAllNews() {
+    public List<NewsDto> readAllNews() {
         try {
             return newsRepository.readAll().stream().map(NewsMapper::mapModelToDTO).toList();
         } catch (Exception e){
@@ -46,7 +46,7 @@ public class NewsService implements Service<NewsDTO> {
     }
 
     @Override
-    public NewsDTO readByNewsId(Long newsId) {
+    public NewsDto readByNewsId(Long newsId) {
         try {
             NewsModel news = newsRepository.readById(newsId);
             return NewsMapper.mapModelToDTO(news);
@@ -57,7 +57,7 @@ public class NewsService implements Service<NewsDTO> {
     }
 
     @Override
-    public NewsDTO updateNews(NewsDTO newsDTO) {
+    public NewsDto updateNews(NewsDto newsDTO) {
         try {
             NewsModel existingNews = newsRepository.readById(newsDTO.getId());
             existingNews.setTitle(newsDTO.getTitle());

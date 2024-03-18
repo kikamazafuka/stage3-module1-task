@@ -1,12 +1,12 @@
 package com.mjc.school.service.validator;
 
-import com.mjc.school.service.dto.NewsDTO;
+import com.mjc.school.service.dto.NewsDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewsValidator {
-    public List<String> validate(NewsDTO newsDTO) {
+    public List<String> validate(NewsDto newsDTO) {
         List<String> errors = new ArrayList<>();
 
         if (newsDTO.getTitle() == null || newsDTO.getTitle().length() < 5 || newsDTO.getTitle().length() > 30) {

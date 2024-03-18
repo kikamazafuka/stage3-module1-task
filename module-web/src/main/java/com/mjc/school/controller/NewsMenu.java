@@ -1,6 +1,6 @@
 package com.mjc.school.controller;
 
-import com.mjc.school.service.dto.NewsDTO;
+import com.mjc.school.service.dto.NewsDto;
 
 import java.util.List;
 import java.util.Scanner;
@@ -9,10 +9,10 @@ public class NewsMenu {
 
     private final String NEWS_WITH_ID = "News with ID ";
 
-    private final Controller<NewsDTO> newsController;
+    private final Controller<NewsDto> newsController;
     private final Scanner scanner;
 
-    public NewsMenu(Controller<NewsDTO> newsController) {
+    public NewsMenu(Controller<NewsDto> newsController) {
         this.newsController = newsController;
         this.scanner = new Scanner(System.in);
     }
@@ -33,10 +33,10 @@ public class NewsMenu {
 
             switch (choice) {
                 case 1:
-                    getAllNews();
+                    readAllNews();
                     break;
                 case 2:
-                    getNewsById();
+                    readByNewsId();
                     break;
                 case 3:
                     createNews();
@@ -56,16 +56,16 @@ public class NewsMenu {
         } while (choice != 0);
     }
 
-    private void getAllNews() {
+    private void readAllNews() {
         System.out.println("All News:");
-        List<NewsDTO> allNews = newsController.getAll();
+        List<NewsDto> allNews = newsController.readAll();
         allNews.forEach(System.out::println);
     }
 
-    private void getNewsById() {
+    private void readByNewsId() {
         System.out.println("Enter news ID:");
         Long id = scanner.nextLong();
-        NewsDTO newsDTO = newsController.getById(id);
+        NewsDto newsDTO = newsController.readById(id);
         System.out.println(NEWS_WITH_ID + id + ": " + newsDTO);
     }
 
@@ -77,12 +77,12 @@ public class NewsMenu {
         System.out.println("Enter author ID:");
         Long authorId = scanner.nextLong();
 
-        NewsDTO newsDTO = new NewsDTO();
+        NewsDto newsDTO = new NewsDto();
         newsDTO.setTitle(title);
         newsDTO.setContent(content);
         newsDTO.setAuthorId(authorId);
 
-        NewsDTO createdNews = newsController.create(newsDTO);
+        NewsDto createdNews = newsController.create(newsDTO);
         System.out.println("Created News: " + createdNews);
     }
 
@@ -91,7 +91,7 @@ public class NewsMenu {
         Long id = scanner.nextLong();
         scanner.nextLine();
 
-        NewsDTO existingNews = newsController.getById(id);
+        NewsDto existingNews = newsController.readById(id);
         if (existingNews != null) {
             System.out.println("Enter new title:");
             String title = scanner.nextLine();
@@ -100,13 +100,13 @@ public class NewsMenu {
             System.out.println("Enter new author ID:");
             Long authorId = scanner.nextLong();
 
-            NewsDTO newsDTO = new NewsDTO();
+            NewsDto newsDTO = new NewsDto();
             newsDTO.setId(id);
             newsDTO.setTitle(title);
             newsDTO.setContent(content);
             newsDTO.setAuthorId(authorId);
 
-            NewsDTO updatedNews = newsController.update(newsDTO);
+            NewsDto updatedNews = newsController.update(newsDTO);
             System.out.println("Updated News: " + updatedNews);
         } else {
             System.out.println(NEWS_WITH_ID + id + " not found!");
