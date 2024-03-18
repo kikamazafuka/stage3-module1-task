@@ -1,7 +1,7 @@
 package com.mjc.school.repository.datasource;
 
-import com.mjc.school.repository.model.Author;
-import com.mjc.school.repository.model.News;
+import com.mjc.school.repository.model.AuthorModel;
+import com.mjc.school.repository.model.NewsModel;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,37 +11,37 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataGenerator {
+public class DataSource {
 
-    private static final DataGenerator instance = new DataGenerator();
+    private static final DataSource instance = new DataSource();
 
-    private DataGenerator() {
+    private DataSource() {
     }
 
-    public static DataGenerator getInstance() {
+    public static DataSource getInstance() {
         return instance;
     }
 
-    public List<News> generateNews() {
-        List<News> newsList = new ArrayList<>();
+    public List<NewsModel> generateNews() {
+        List<NewsModel> newsList = new ArrayList<>();
 
         List<String> authorsData = readFromFile("author.txt");
         List<String> contentData = readFromFile("content.txt");
 
         for (int i = 1; i <= 20; i++) {
-            Author author = createAuthor(authorsData.get(i % authorsData.size()));
+            AuthorModel author = createAuthor(authorsData.get(i % authorsData.size()));
             String content = contentData.get(i % contentData.size());
 
-            News news = new News((long) i, "Title " + i, content, LocalDateTime.now(), LocalDateTime.now(), author.getId());
+            NewsModel news = new NewsModel((long) i, "Title " + i, content, LocalDateTime.now(), LocalDateTime.now(), author.getId());
             newsList.add(news);
         }
 
         return newsList;
     }
 
-    private static Author createAuthor(String authorData) {
+    private static AuthorModel createAuthor(String authorData) {
         if (authorData != null) {
-            return new Author(authorData);
+            return new AuthorModel(authorData);
         } else {
             throw new IllegalArgumentException("Invalid author data: " + authorData);
         }
@@ -49,7 +49,7 @@ public class DataGenerator {
 
     private static List<String> readFromFile(String fileName) {
         try {
-            Path filePath = Paths.get(DataGenerator.class.getClassLoader().getResource(fileName).toURI());
+            Path filePath = Paths.get(DataSource.class.getClassLoader().getResource(fileName).toURI());
             return Files.readAllLines(filePath);
         } catch (IOException | NullPointerException | java.net.URISyntaxException e) {
             throw new RuntimeException("Error reading file: " + fileName, e);

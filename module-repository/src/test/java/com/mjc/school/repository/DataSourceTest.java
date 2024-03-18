@@ -1,13 +1,13 @@
 package com.mjc.school.repository;
 
-import com.mjc.school.repository.datasource.DataGenerator;
+import com.mjc.school.repository.datasource.DataSource;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DataGeneratorTest {
+class DataSourceTest {
 
-    DataGenerator dataGenerator = DataGenerator.getInstance();
+    DataSource dataGenerator = DataSource.getInstance();
     @Test
     public void testReadFromFile(){
 

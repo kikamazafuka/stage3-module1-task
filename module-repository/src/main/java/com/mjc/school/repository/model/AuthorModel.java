@@ -1,15 +1,15 @@
 package com.mjc.school.repository.model;
 
-public class Author {
+public class AuthorModel {
 
     private Long id;
     private String name;
 
-    public Author(Long id, String name) {
+    public AuthorModel(Long id, String name) {
         this.id = id;
         this.name = name;
     }
-    public Author( String name) {
+    public AuthorModel(String name) {
         this.name = name;
     }
 
@@ -34,7 +34,7 @@ public class Author {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Author author = (Author) o;
+        AuthorModel author = (AuthorModel) o;
 
         if (id != null ? !id.equals(author.id) : author.id != null) return false;
         return name != null ? name.equals(author.name) : author.name == null;

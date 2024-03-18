@@ -1,7 +1,7 @@
 package com.mjc.school.service.impl;
 
 import com.mjc.school.repository.impl.NewsRepository;
-import com.mjc.school.repository.model.News;
+import com.mjc.school.repository.model.NewsModel;
 import com.mjc.school.service.NewsMapper;
 import com.mjc.school.service.Service;
 import com.mjc.school.service.dto.NewsDTO;
@@ -24,8 +24,8 @@ public class NewsService implements Service<NewsDTO> {
             throw new IllegalArgumentException("Validation failed: " + validationErrors);
         }
         try {
-            News news = NewsMapper.mapDTOToModel(newsDTO);
-            News createdNews = newsRepository.create(news);
+            NewsModel news = NewsMapper.mapDTOToModel(newsDTO);
+            NewsModel createdNews = newsRepository.create(news);
             return NewsMapper.mapModelToDTO(createdNews);
         } catch (Exception e){
             throw new NewsServiceException("Error creating news", "CREATE_ERROR");
@@ -45,7 +45,7 @@ public class NewsService implements Service<NewsDTO> {
     @Override
     public NewsDTO getNewsById(Long newsId) {
         try {
-            News news = newsRepository.readById(newsId);
+            NewsModel news = newsRepository.readById(newsId);
             return NewsMapper.mapModelToDTO(news);
         } catch (Exception e){
             throw new NewsServiceException("Error getting news by id", "GET_BY_ID_ERROR");
@@ -56,12 +56,12 @@ public class NewsService implements Service<NewsDTO> {
     @Override
     public NewsDTO updateNews(NewsDTO newsDTO) {
         try {
-            News existingNews = newsRepository.readById(newsDTO.getId());
+            NewsModel existingNews = newsRepository.readById(newsDTO.getId());
             existingNews.setTitle(newsDTO.getTitle());
             existingNews.setContent(newsDTO.getContent());
             existingNews.setAuthorId(newsDTO.getAuthorId());
 
-            News updatedNews = newsRepository.update(existingNews);
+            NewsModel updatedNews = newsRepository.update(existingNews);
             return NewsMapper.mapModelToDTO(updatedNews);
         } catch (Exception e){
             throw new NewsServiceException("Error updating news", "UPDATE_ERROR");
@@ -72,7 +72,7 @@ public class NewsService implements Service<NewsDTO> {
     @Override
     public boolean deleteNews(Long newsId) {
         try {
-            News news = newsRepository.readById(newsId);
+            NewsModel news = newsRepository.readById(newsId);
             if (news!=null) {
                 newsRepository.deleteById(newsId);
                 return true;

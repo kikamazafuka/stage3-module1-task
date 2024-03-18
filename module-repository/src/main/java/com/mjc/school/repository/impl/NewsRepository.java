@@ -1,33 +1,33 @@
 package com.mjc.school.repository.impl;
 
 import com.mjc.school.repository.GeneralRepository;
-import com.mjc.school.repository.datasource.DataGenerator;
-import com.mjc.school.repository.model.News;
+import com.mjc.school.repository.datasource.DataSource;
+import com.mjc.school.repository.model.NewsModel;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class NewsRepository implements GeneralRepository<News> {
+public class NewsRepository implements GeneralRepository<NewsModel> {
 
-    private final DataGenerator dataGenerator;
+    private final DataSource dataSource;
     private final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
-    private final List<News> allNews;
+    private final List<NewsModel> allNews;
 
     public NewsRepository() {
-        this.dataGenerator = DataGenerator.getInstance();
-        this.allNews = dataGenerator.generateNews();
+        this.dataSource = DataSource.getInstance();
+        this.allNews = dataSource.generateNews();
     }
 
 
     @Override
-    public List<News> readAll() {
+    public List<NewsModel> readAll() {
         return this.allNews;
     }
 
     @Override
-    public News readById(long id) {
-        for (News news : allNews) {
+    public NewsModel readById(Long id) {
+        for (NewsModel news : allNews) {
             if (news.getId() == id) {
                 return news;
             }
@@ -36,7 +36,7 @@ public class NewsRepository implements GeneralRepository<News> {
     }
 
     @Override
-    public News create(News news) {
+    public NewsModel create(NewsModel news) {
         LocalDateTime time = LocalDateTime.parse(LocalDateTime.now().format(TIME_FORMAT));
         Long id = (long) allNews.size() + 1;
         news.setId(id);
@@ -47,9 +47,9 @@ public class NewsRepository implements GeneralRepository<News> {
     }
 
     @Override
-    public News update(News news) {
+    public NewsModel update(NewsModel news) {
         LocalDateTime time = LocalDateTime.parse(LocalDateTime.now().format(TIME_FORMAT));
-        News existingNews = readById(news.getId());
+        NewsModel existingNews = readById(news.getId());
         if (existingNews != null) {
             existingNews.setTitle(news.getTitle());
             existingNews.setContent(news.getContent());
@@ -61,8 +61,8 @@ public class NewsRepository implements GeneralRepository<News> {
     }
 
     @Override
-    public Boolean deleteById(long id) {
-        News newsToDelete = readById(id);
+    public Boolean deleteById(Long id) {
+        NewsModel newsToDelete = readById(id);
         if (newsToDelete!=null){
             allNews.remove(newsToDelete);
             return true;
