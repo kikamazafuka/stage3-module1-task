@@ -7,7 +7,7 @@ public interface Service<T>{
 
     List<T> readAllNews();
 
-    T readNewsById(Long newsId);
+    T readByNewsId(Long newsId);
 
     T updateNews(T newsDTO);
 

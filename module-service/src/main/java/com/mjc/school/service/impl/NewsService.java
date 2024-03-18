@@ -46,7 +46,7 @@ public class NewsService implements Service<NewsDTO> {
     }
 
     @Override
-    public NewsDTO readNewsById(Long newsId) {
+    public NewsDTO readByNewsId(Long newsId) {
         try {
             NewsModel news = newsRepository.readById(newsId);
             return NewsMapper.mapModelToDTO(news);

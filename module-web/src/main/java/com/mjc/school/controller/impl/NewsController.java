@@ -26,7 +26,7 @@ public class NewsController implements Controller<NewsDTO> {
 
     @Override
     public NewsDTO getById(Long id) {
-        return newsService.readNewsById(id);
+        return newsService.readByNewsId(id);
     }
 
     @Override
