@@ -1,5 +1,6 @@
 package com.mjc.school.service.impl;
 
+import com.mjc.school.repository.GeneralRepository;
 import com.mjc.school.repository.impl.NewsRepository;
 import com.mjc.school.repository.model.NewsModel;
 import com.mjc.school.service.NewsMapper;
@@ -11,15 +12,17 @@ import com.mjc.school.service.validator.NewsValidator;
 import java.util.List;
 
 public class NewsService implements Service<NewsDTO> {
-    private final NewsRepository newsRepository;
+    private final GeneralRepository<NewsModel> newsRepository;
+    private final NewsValidator newsValidator;
 
     public NewsService() {
         this.newsRepository = new NewsRepository();
+        newsValidator = new NewsValidator();
     }
 
     @Override
     public NewsDTO createNews(NewsDTO newsDTO) {
-        List<String> validationErrors = NewsValidator.validate(newsDTO);
+        List<String> validationErrors = newsValidator.validate(newsDTO);
         if (!validationErrors.isEmpty()) {
             throw new IllegalArgumentException("Validation failed: " + validationErrors);
         }
@@ -33,7 +36,7 @@ public class NewsService implements Service<NewsDTO> {
     }
 
     @Override
-    public List<NewsDTO> getAllNews() {
+    public List<NewsDTO> readAllNews() {
         try {
             return newsRepository.readAll().stream().map(NewsMapper::mapModelToDTO).toList();
         } catch (Exception e){
@@ -43,7 +46,7 @@ public class NewsService implements Service<NewsDTO> {
     }
 
     @Override
-    public NewsDTO getNewsById(Long newsId) {
+    public NewsDTO readNewsById(Long newsId) {
         try {
             NewsModel news = newsRepository.readById(newsId);
             return NewsMapper.mapModelToDTO(news);
@@ -70,7 +73,7 @@ public class NewsService implements Service<NewsDTO> {
     }
 
     @Override
-    public boolean deleteNews(Long newsId) {
+    public Boolean deleteNews(Long newsId) {
         try {
             NewsModel news = newsRepository.readById(newsId);
             if (news!=null) {

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsValidator {
-    public static List<String> validate(NewsDTO newsDTO) {
+    public List<String> validate(NewsDTO newsDTO) {
         List<String> errors = new ArrayList<>();
 
         if (newsDTO.getTitle() == null || newsDTO.getTitle().length() < 5 || newsDTO.getTitle().length() > 30) {

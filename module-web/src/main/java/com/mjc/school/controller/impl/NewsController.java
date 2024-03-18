@@ -21,12 +21,12 @@ public class NewsController implements Controller<NewsDTO> {
 
     @Override
     public List<NewsDTO> getAll() {
-        return newsService.getAllNews();
+        return newsService.readAllNews();
     }
 
     @Override
     public NewsDTO getById(Long id) {
-        return newsService.getNewsById(id);
+        return newsService.readNewsById(id);
     }
 
     @Override
